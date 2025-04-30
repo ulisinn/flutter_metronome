@@ -56,10 +56,10 @@ class _MetronomePageState extends State<MetronomePage> {
   int _totalPulses = 0;
 
   // Audio players
-  final AudioPlayer _strongBeatPlayer = AudioPlayer()
-  ..setReleaseMode(ReleaseMode.stop);
-  final AudioPlayer _weakBeatPlayer = AudioPlayer()
-  ..setReleaseMode(ReleaseMode.stop);
+  final AudioPlayer _strongBeatPlayer =
+      AudioPlayer()..setReleaseMode(ReleaseMode.stop);
+  final AudioPlayer _weakBeatPlayer =
+      AudioPlayer()..setReleaseMode(ReleaseMode.stop);
 
   @override
   void initState() {
@@ -84,9 +84,9 @@ class _MetronomePageState extends State<MetronomePage> {
         _updateTotalPulses();
       });
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Maximum 7 cells allowed')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Maximum 7 cells allowed')));
     }
   }
 
@@ -173,10 +173,7 @@ class _MetronomePageState extends State<MetronomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Custom Metronome'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Custom Metronome'), centerTitle: true),
       body: Column(
         children: [
           // BPM control
@@ -228,7 +225,10 @@ class _MetronomePageState extends State<MetronomePage> {
                     onPressed: () => _addCell(cell.pulses),
                     child: Text('${cell.pulses} Pulses'),
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
                     ),
                   ),
                 ),
@@ -256,13 +256,20 @@ class _MetronomePageState extends State<MetronomePage> {
                       child: ListView.builder(
                         itemCount: _sequence.length,
                         itemBuilder: (context, index) {
-                          final isCurrentCell = _isPlaying && index == _currentCell;
+                          final isCurrentCell =
+                              _isPlaying && index == _currentCell;
                           return ListTile(
                             title: Text(
                               'Cell ${index + 1}: ${_sequence[index].pulses} pulses',
                               style: TextStyle(
-                                fontWeight: isCurrentCell ? FontWeight.bold : FontWeight.normal,
-                                color: isCurrentCell ? Theme.of(context).colorScheme.primary : null,
+                                fontWeight:
+                                    isCurrentCell
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                color:
+                                    isCurrentCell
+                                        ? Theme.of(context).colorScheme.primary
+                                        : null,
                               ),
                             ),
                             trailing: IconButton(
@@ -287,15 +294,18 @@ class _MetronomePageState extends State<MetronomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
                   _sequence[_currentCell].pulses,
-                      (index) => Container(
+                  (index) => Container(
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     width: 30,
                     height: 30,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: index == _currentPulse
-                          ? (index == 0 ? Colors.red : Colors.green)
-                          : (index == 0 ? Colors.red.withOpacity(0.3) : Colors.green.withOpacity(0.3)),
+                      color:
+                          index == _currentPulse
+                              ? (index == 0 ? Colors.red : Colors.green)
+                              : (index == 0
+                                  ? Colors.red.withOpacity(0.3)
+                                  : Colors.green.withOpacity(0.3)),
                     ),
                   ),
                 ),
@@ -308,7 +318,10 @@ class _MetronomePageState extends State<MetronomePage> {
             child: ElevatedButton(
               onPressed: _togglePlayback,
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 16,
+                ),
                 backgroundColor: _isPlaying ? Colors.red : Colors.green,
               ),
               child: Text(
