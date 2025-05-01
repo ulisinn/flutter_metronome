@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../models/cell_config.dart';
-import '../services/metronome_engine.dart';
+import '../core/metronome_engine.dart';
+import '../models/metronome_config.dart';
 import '../widgets/beat_visualizer.dart';
 import '../widgets/bpm_control.dart';
 import '../widgets/cell_selector.dart';
@@ -35,8 +36,20 @@ class _MetronomePageState extends State<MetronomePage> {
   void initState() {
     super.initState();
 
-    // Initialize metronome engine
-    _metronome = MetronomeEngine();
+  // Create a config object
+  final config = MetronomeConfig(
+    initialBpm: 120.0,  // Custom initial BPM
+    initialSequence: [  // Custom initial sequence
+      CellConfig(pulses: 4),
+    ],
+    strongBeatVolume: 1.0,
+    weakBeatVolume: 0.7,
+  );
+
+  // TODO: make config object in constructor work.
+  // Initialize metronome engine with config
+  // _metronome = MetronomeEngine(config: config);
+  _metronome = MetronomeEngine();
 
     // Set up listeners for metronome events
     _metronome.onBeatChanged = (cell, pulse) {
