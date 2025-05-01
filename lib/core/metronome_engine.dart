@@ -3,19 +3,21 @@ import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
 
+import '../constants/constants.dart';
 import '../models/cell_config.dart';
+import '../models/metronome_config.dart';
 
 class MetronomeEngine {
   // Audio players
   final AudioPlayer _strongBeatPlayer =
-  AudioPlayer()..setReleaseMode(ReleaseMode.stop);
+      AudioPlayer()..setReleaseMode(ReleaseMode.stop);
   final AudioPlayer _weakBeatPlayer =
-  AudioPlayer()..setReleaseMode(ReleaseMode.stop);
+      AudioPlayer()..setReleaseMode(ReleaseMode.stop);
 
   // Timing controls
   Timer? _timer;
   bool _isPlaying = false;
-  double _bpm = 120.0;
+  double _bpm;
 
   // Current state
   int _currentCell = 0;
@@ -25,29 +27,50 @@ class MetronomeEngine {
   // Sequence of cells
   final List<CellConfig> _sequence = [];
 
+  // Audio settings
+  final double _strongBeatVolume;
+  final double _weakBeatVolume;
+
   // Callback for UI updates
   Function(int currentCell, int currentPulse)? onBeatChanged;
   Function(bool isPlaying)? onPlaybackStateChanged;
 
-  // Constructor
-  MetronomeEngine() {
-    _init();
+  // Constructor with config parameter
+  MetronomeEngine({MetronomeConfig? config})
+    : _bpm = config?.initialBpm ?? 120.0,
+      _strongBeatVolume =
+          config?.strongBeatVolume ?? MetronomeVolume.strongBeatVolume,
+      _weakBeatVolume =
+          config?.weakBeatVolume ?? MetronomeVolume.weakBeatVolume {
+    _init(config);
   }
 
   // Initialize the metronome
-  Future<void> _init() async {
+  Future<void> _init(MetronomeConfig? config) async {
     await _prepareAudioPlayers();
-    // Add a default cell to start
-    _sequence.add(CellConfig(pulses: 4));
+
+    // Add cells from config or default
+    if (config != null && config.initialSequence.isNotEmpty) {
+      _sequence.addAll(config.initialSequence);
+    } else {
+      // Add a default cell to start
+      _sequence.add(CellConfig(pulses: 4));
+    }
+
     _updateTotalPulses();
   }
 
   // Getters
   bool get isPlaying => _isPlaying;
+
   double get bpm => _bpm;
+
   int get currentCell => _currentCell;
+
   int get currentPulse => _currentPulse;
+
   List<CellConfig> get sequence => List.unmodifiable(_sequence);
+
   int get totalPulses => _totalPulses;
 
   // Prepare audio players
@@ -55,8 +78,8 @@ class MetronomeEngine {
     await _strongBeatPlayer.setSource(AssetSource('sounds/strong_beat.wav'));
     await _weakBeatPlayer.setSource(AssetSource('sounds/weak_beat.wav'));
     // Set volume
-    await _strongBeatPlayer.setVolume(1.0);
-    await _weakBeatPlayer.setVolume(0.7);
+    await _strongBeatPlayer.setVolume(_strongBeatVolume);
+    await _weakBeatPlayer.setVolume(_weakBeatVolume);
   }
 
   // Update BPM
