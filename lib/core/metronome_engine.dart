@@ -6,6 +6,7 @@ import 'package:audioplayers/audioplayers.dart';
 import '../constants/constants.dart';
 import '../models/cell_config.dart';
 import '../models/metronome_config.dart';
+import 'countdown_timer.dart';
 
 class MetronomeEngine {
   // Audio players
@@ -13,6 +14,11 @@ class MetronomeEngine {
       AudioPlayer()..setReleaseMode(ReleaseMode.stop);
   final AudioPlayer _weakBeatPlayer =
       AudioPlayer()..setReleaseMode(ReleaseMode.stop);
+
+  // Add these properties to the class
+  CountdownTimer? _countdownTimer;
+  bool _useCountdownTimer = false;
+  int _countdownDurationSeconds = 300; // Default 5 minutes
 
   // Timing controls
   Timer? _timer;
@@ -41,7 +47,9 @@ class MetronomeEngine {
       _strongBeatVolume =
           config?.strongBeatVolume ?? MetronomeVolume.strongBeatVolume,
       _weakBeatVolume =
-          config?.weakBeatVolume ?? MetronomeVolume.weakBeatVolume {
+          config?.weakBeatVolume ?? MetronomeVolume.weakBeatVolume,
+      _useCountdownTimer = config?.useCountdownTimer ?? false,
+      _countdownDurationSeconds = config?.countdownDurationSeconds ?? 300 {
     _init(config);
   }
 
@@ -133,6 +141,28 @@ class MetronomeEngine {
     }
   }
 
+  // Add these methods
+  void setCountdownTimer(bool enabled, {int? durationSeconds}) {
+    _useCountdownTimer = enabled;
+    if (durationSeconds != null) {
+      _countdownDurationSeconds = durationSeconds;
+    }
+
+    // Recreate the countdown timer if needed
+    if (_useCountdownTimer) {
+      _countdownTimer?.dispose();
+      _countdownTimer = CountdownTimer(
+        durationSeconds: _countdownDurationSeconds,
+        onComplete: () {
+          stop();
+        },
+        onTick: (seconds) {
+          // This can be used to update UI if needed
+        },
+      );
+    }
+  }
+
   // Start the metronome
   void start() {
     if (_sequence.isEmpty) return;
@@ -140,6 +170,12 @@ class MetronomeEngine {
     _isPlaying = true;
     _currentCell = 0;
     _currentPulse = 0;
+
+    // Start countdown timer if enabled
+    if (_useCountdownTimer && _countdownTimer != null) {
+      _countdownTimer!.reset();
+      _countdownTimer!.start();
+    }
 
     // Notify listeners about playback state change
     onPlaybackStateChanged?.call(_isPlaying);
@@ -185,6 +221,9 @@ class MetronomeEngine {
     _currentCell = 0;
     _currentPulse = 0;
 
+    // Stop countdown timer if active
+    _countdownTimer?.stop();
+
     // Notify listeners about playback state change
     onPlaybackStateChanged?.call(_isPlaying);
     // Notify listeners about beat change
@@ -194,7 +233,16 @@ class MetronomeEngine {
   // Clean up resources
   void dispose() {
     _timer?.cancel();
+    _countdownTimer?.dispose();
     _strongBeatPlayer.dispose();
     _weakBeatPlayer.dispose();
   }
+
+  // Add these getters
+  bool get useCountdownTimer => _useCountdownTimer;
+
+  int get countdownDurationSeconds => _countdownDurationSeconds;
+
+  int get remainingSeconds =>
+      _countdownTimer?.remainingSeconds ?? _countdownDurationSeconds;
 }
