@@ -68,6 +68,49 @@ class MetronomeEngine {
     _updateTotalPulses();
   }
 
+  // Add this method to the MetronomeEngine class
+  void updateConfig(MetronomeConfig config) {
+    // Update BPM
+    _bpm = config.initialBpm;
+
+    // Update volume settings
+    _strongBeatPlayer.setVolume(config.strongBeatVolume);
+    _weakBeatPlayer.setVolume(config.weakBeatVolume);
+
+    // Update countdown timer settings
+    _useCountdownTimer = config.useCountdownTimer;
+    _countdownDurationSeconds = config.countdownDurationSeconds;
+
+    // Recreate the countdown timer if needed
+    if (_useCountdownTimer) {
+      _countdownTimer?.dispose();
+      _countdownTimer = CountdownTimer(
+        durationSeconds: _countdownDurationSeconds,
+        onComplete: () {
+          stop();
+        },
+        onTick: (seconds) {
+          // This can be used to update UI if needed
+        },
+      );
+    }
+
+    // Update sequence
+    _sequence.clear();
+    _sequence.addAll(config.initialSequence);
+    _updateTotalPulses();
+
+    // Reset current position
+    _currentCell = 0;
+    _currentPulse = 0;
+
+    // Restart metronome if playing to apply new settings
+    if (_isPlaying) {
+      stop();
+      start();
+    }
+  }
+
   // Getters
   bool get isPlaying => _isPlaying;
 
@@ -90,43 +133,6 @@ class MetronomeEngine {
     await _weakBeatPlayer.setVolume(_weakBeatVolume);
   }
 
-  // Update BPM
-  void setBpm(double value) {
-    _bpm = value;
-
-    // Restart metronome if playing to apply new BPM
-    if (_isPlaying) {
-      stop();
-      start();
-    }
-  }
-
-  // Add a cell to the sequence
-  bool addCell(int pulses) {
-    if (_sequence.length < 7) {
-      _sequence.add(CellConfig(pulses: pulses));
-      _updateTotalPulses();
-      return true;
-    }
-    return false;
-  }
-
-  // Remove a cell from the sequence
-  bool removeCell(int index) {
-    if (_sequence.length > 1) {
-      _sequence.removeAt(index);
-      _updateTotalPulses();
-
-      // Adjust currentCell if needed
-      if (_currentCell >= _sequence.length) {
-        _currentCell = _sequence.length - 1;
-      }
-
-      return true;
-    }
-    return false;
-  }
-
   // Update total pulses count
   void _updateTotalPulses() {
     _totalPulses = _sequence.fold(0, (sum, cell) => sum + cell.pulses);
@@ -138,28 +144,6 @@ class MetronomeEngine {
       stop();
     } else {
       start();
-    }
-  }
-
-  // Add these methods
-  void setCountdownTimer(bool enabled, {int? durationSeconds}) {
-    _useCountdownTimer = enabled;
-    if (durationSeconds != null) {
-      _countdownDurationSeconds = durationSeconds;
-    }
-
-    // Recreate the countdown timer if needed
-    if (_useCountdownTimer) {
-      _countdownTimer?.dispose();
-      _countdownTimer = CountdownTimer(
-        durationSeconds: _countdownDurationSeconds,
-        onComplete: () {
-          stop();
-        },
-        onTick: (seconds) {
-          // This can be used to update UI if needed
-        },
-      );
     }
   }
 

@@ -10,7 +10,6 @@ import '../widgets/playback_control.dart';
 import '../widgets/sequence_list.dart';
 import '../widgets/countdown_timer_widget.dart';
 
-
 // Main metronome page
 class MetronomePage extends StatefulWidget {
   const MetronomePage({super.key});
@@ -22,6 +21,7 @@ class MetronomePage extends StatefulWidget {
 class _MetronomePageState extends State<MetronomePage> {
   // Metronome engine instance
   late final MetronomeEngine _metronome;
+  List<CellConfig> _sequence = [];
 
   // UI state
   final List<CellConfig> _availableCells = [
@@ -29,10 +29,11 @@ class _MetronomePageState extends State<MetronomePage> {
     CellConfig(pulses: 3),
     CellConfig(pulses: 4),
   ];
-
+  double _bpm = 120.0;
   bool _isPlaying = false;
   int _currentCell = 0;
   int _currentPulse = 0;
+
   // Add these state variables to _MetronomePageState
   bool _useCountdownTimer = false;
   int _countdownDuration = 300; // Default 5 minutes
@@ -41,20 +42,20 @@ class _MetronomePageState extends State<MetronomePage> {
   void initState() {
     super.initState();
 
-  // Create a config object
-  final config = MetronomeConfig(
-    initialBpm: 120.0,  // Custom initial BPM
-    initialSequence: [  // Custom initial sequence
-      CellConfig(pulses: 4),
-    ],
-    strongBeatVolume: 1.0,
-    weakBeatVolume: 0.7,
-  );
+    // Create a config object
+    final _config = MetronomeConfig(
+      initialBpm: _bpm, // Custom initial BPM
+      initialSequence: [
+        // Custom initial sequence
+        CellConfig(pulses: 4),
+      ],
+    );
 
-  // TODO: make config object in constructor work.
-  // Initialize metronome engine with config
-  // _metronome = MetronomeEngine(config: config);
-  _metronome = MetronomeEngine();
+    // TODO: make config object in constructor work.
+    // Initialize metronome engine with config
+    // _metronome = MetronomeEngine(config: config);
+    _sequence = List.from(_config.initialSequence);
+    _metronome = MetronomeEngine(config: _config);
 
     // Set up listeners for metronome events
     _metronome.onBeatChanged = (cell, pulse) {
@@ -71,43 +72,91 @@ class _MetronomePageState extends State<MetronomePage> {
     };
   }
 
-  void _addCell(int pulses) {
-    bool success = _metronome.addCell(pulses);
-    if (!success) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Maximum 7 cells allowed')),
-      );
-    } else {
-      setState(() {});
-    }
+void _addCell(int pulses) {
+  // Check if we can add more cells (max 7)
+  if (_sequence.length >= 7) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Maximum 7 cells allowed')),
+    );
+    return;
   }
 
-  void _removeCell(int index) {
-    bool success = _metronome.removeCell(index);
-    if (success) {
-      setState(() {});
-    }
+  setState(() {
+    // Update local sequence state
+    _sequence.add(CellConfig(pulses: pulses));
+
+    // Create a new config with the updated sequence
+    final config = _createCurrentConfig();
+
+    // Update the metronome with the new config
+    _metronome.updateConfig(config);
+  });
+}
+
+void _removeCell(int index) {
+  // Check if we can remove cells (min 1)
+  if (_sequence.length <= 1) {
+    return;
   }
+
+  setState(() {
+    // Update local sequence state
+    _sequence.removeAt(index);
+
+    // Create a new config with the updated sequence
+    final config = _createCurrentConfig();
+
+    // Update the metronome with the new config
+    _metronome.updateConfig(config);
+  });
+}
 
   // Add this method to _MetronomePageState
   void _onCountdownTimerEnabledChanged(bool enabled) {
     setState(() {
       _useCountdownTimer = enabled;
-      _metronome.setCountdownTimer(enabled, durationSeconds: _countdownDuration);
+
+      // Create a new config with updated countdown timer settings
+      final config = _createCurrentConfig();
+
+      // Update the metronome with the new config
+      _metronome.updateConfig(config);
     });
   }
 
   void _onCountdownDurationChanged(int seconds) {
     setState(() {
       _countdownDuration = seconds;
-      _metronome.setCountdownTimer(_useCountdownTimer, durationSeconds: seconds);
+
+      // Create a new config with updated countdown duration
+      final config = _createCurrentConfig();
+
+      // Update the metronome with the new config
+      _metronome.updateConfig(config);
     });
   }
 
   void _onBpmChanged(double value) {
-    _metronome.setBpm(value);
-    setState(() {});
+    setState(() {
+      _bpm = value;
+
+      // Create a new config with updated BPM
+      final config = _createCurrentConfig();
+
+      // Update the metronome with the new config
+      _metronome.updateConfig(config);
+    });
   }
+
+  // Add this method to _MetronomePageState
+MetronomeConfig _createCurrentConfig() {
+  return MetronomeConfig(
+    initialBpm: _bpm,
+    initialSequence: List.from(_sequence),  // Use local sequence instead of _metronome.sequence
+    useCountdownTimer: _useCountdownTimer,
+    countdownDurationSeconds: _countdownDuration,
+  );
+}
 
   @override
   void dispose() {
@@ -118,17 +167,11 @@ class _MetronomePageState extends State<MetronomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Custom Metronome'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Custom Metronome'), centerTitle: true),
       body: Column(
         children: [
           // BPM control
-          BpmControlWidget(
-            bpm: _metronome.bpm,
-            onChanged: _onBpmChanged,
-          ),
+          BpmControlWidget(bpm: _bpm, onChanged: _onBpmChanged),
 
           // Available cell types
           CellSelectorWidget(
@@ -139,7 +182,7 @@ class _MetronomePageState extends State<MetronomePage> {
           // Current sequence display
           Expanded(
             child: SequenceListWidget(
-              sequence: _metronome.sequence,
+            sequence: _sequence,  // Use local sequence instead of _metronome.sequence
               currentCell: _currentCell,
               isPlaying: _isPlaying,
               onRemoveCell: _removeCell,
@@ -147,9 +190,9 @@ class _MetronomePageState extends State<MetronomePage> {
           ),
 
           // Visualization of current beat
-          if (_isPlaying && _metronome.sequence.isNotEmpty)
+        if (_isPlaying && _sequence.isNotEmpty)  // Use local sequence
             BeatVisualizerWidget(
-              currentCell: _metronome.sequence[_currentCell],
+            currentCell: _sequence[_currentCell],  // Use local sequence
               currentPulse: _currentPulse,
             ),
           // Update the build method to include the countdown timer widget
