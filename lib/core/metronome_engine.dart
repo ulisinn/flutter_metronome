@@ -184,6 +184,8 @@ class MetronomeEngine {
         _weakBeatPlayer.resume();
       }
 
+      // Notify listeners about beat change BEFORE incrementing
+      onBeatChanged?.call(_currentCell, _currentPulse);
       // Move to next pulse
       _currentPulse++;
 
@@ -192,9 +194,6 @@ class MetronomeEngine {
         _currentPulse = 0;
         _currentCell = (_currentCell + 1) % _sequence.length;
       }
-
-      // Notify listeners about beat change
-      onBeatChanged?.call(_currentCell, _currentPulse);
     });
   }
 

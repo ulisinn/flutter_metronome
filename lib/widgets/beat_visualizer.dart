@@ -17,6 +17,7 @@ class BeatVisualizerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
@@ -24,7 +25,7 @@ class BeatVisualizerWidget extends StatelessWidget {
         children: List.generate(
           currentCell.pulses,
               (index) => BeatIndicator(
-            isActive: index == currentPulse,
+            isActive: index == currentPulse && currentPulse >= 0,
             isStrong: index == 0,
           ),
         ),

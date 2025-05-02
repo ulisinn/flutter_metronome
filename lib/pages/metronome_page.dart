@@ -32,7 +32,7 @@ class _MetronomePageState extends State<MetronomePage> {
   double _bpm = 120.0;
   bool _isPlaying = false;
   int _currentCell = 0;
-  int _currentPulse = 0;
+  int _currentPulse = -1;
 
   // Add these state variables to _MetronomePageState
   bool _useCountdownTimer = false;
@@ -72,44 +72,44 @@ class _MetronomePageState extends State<MetronomePage> {
     };
   }
 
-void _addCell(int pulses) {
-  // Check if we can add more cells (max 7)
-  if (_sequence.length >= 7) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Maximum 7 cells allowed')),
-    );
-    return;
+  void _addCell(int pulses) {
+    // Check if we can add more cells (max 7)
+    if (_sequence.length >= 7) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Maximum 7 cells allowed')));
+      return;
+    }
+
+    setState(() {
+      // Update local sequence state
+      _sequence.add(CellConfig(pulses: pulses));
+
+      // Create a new config with the updated sequence
+      final config = _createCurrentConfig();
+
+      // Update the metronome with the new config
+      _metronome.updateConfig(config);
+    });
   }
 
-  setState(() {
-    // Update local sequence state
-    _sequence.add(CellConfig(pulses: pulses));
+  void _removeCell(int index) {
+    // Check if we can remove cells (min 1)
+    if (_sequence.length <= 1) {
+      return;
+    }
 
-    // Create a new config with the updated sequence
-    final config = _createCurrentConfig();
+    setState(() {
+      // Update local sequence state
+      _sequence.removeAt(index);
 
-    // Update the metronome with the new config
-    _metronome.updateConfig(config);
-  });
-}
+      // Create a new config with the updated sequence
+      final config = _createCurrentConfig();
 
-void _removeCell(int index) {
-  // Check if we can remove cells (min 1)
-  if (_sequence.length <= 1) {
-    return;
+      // Update the metronome with the new config
+      _metronome.updateConfig(config);
+    });
   }
-
-  setState(() {
-    // Update local sequence state
-    _sequence.removeAt(index);
-
-    // Create a new config with the updated sequence
-    final config = _createCurrentConfig();
-
-    // Update the metronome with the new config
-    _metronome.updateConfig(config);
-  });
-}
 
   // Add this method to _MetronomePageState
   void _onCountdownTimerEnabledChanged(bool enabled) {
@@ -149,14 +149,15 @@ void _removeCell(int index) {
   }
 
   // Add this method to _MetronomePageState
-MetronomeConfig _createCurrentConfig() {
-  return MetronomeConfig(
-    initialBpm: _bpm,
-    initialSequence: List.from(_sequence),  // Use local sequence instead of _metronome.sequence
-    useCountdownTimer: _useCountdownTimer,
-    countdownDurationSeconds: _countdownDuration,
-  );
-}
+  MetronomeConfig _createCurrentConfig() {
+    return MetronomeConfig(
+      initialBpm: _bpm,
+      initialSequence: List.from(_sequence),
+      // Use local sequence instead of _metronome.sequence
+      useCountdownTimer: _useCountdownTimer,
+      countdownDurationSeconds: _countdownDuration,
+    );
+  }
 
   @override
   void dispose() {
@@ -182,7 +183,8 @@ MetronomeConfig _createCurrentConfig() {
           // Current sequence display
           Expanded(
             child: SequenceListWidget(
-            sequence: _sequence,  // Use local sequence instead of _metronome.sequence
+              sequence: _sequence,
+              // Use local sequence instead of _metronome.sequence
               currentCell: _currentCell,
               isPlaying: _isPlaying,
               onRemoveCell: _removeCell,
@@ -190,9 +192,9 @@ MetronomeConfig _createCurrentConfig() {
           ),
 
           // Visualization of current beat
-        if (_isPlaying && _sequence.isNotEmpty)  // Use local sequence
+          if (_isPlaying && _sequence.isNotEmpty) // Use local sequence
             BeatVisualizerWidget(
-            currentCell: _sequence[_currentCell],  // Use local sequence
+              currentCell: _sequence[_currentCell], // Use local sequence
               currentPulse: _currentPulse,
             ),
           // Update the build method to include the countdown timer widget
