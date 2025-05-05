@@ -17,6 +17,7 @@ class MetronomeEngine {
 
   // Add these properties to the class
   CountdownTimer? _countdownTimer;
+  bool _markDownbeat;
   bool _useCountdownTimer = false;
   int _countdownDurationSeconds = 300; // Default 5 minutes
 
@@ -49,7 +50,8 @@ class MetronomeEngine {
       _weakBeatVolume =
           config?.weakBeatVolume ?? MetronomeVolume.weakBeatVolume,
       _useCountdownTimer = config?.useCountdownTimer ?? false,
-      _countdownDurationSeconds = config?.countdownDurationSeconds ?? 300 {
+      _countdownDurationSeconds = config?.countdownDurationSeconds ?? 300,
+      _markDownbeat = config?.markDownbeat ?? true {
     _init(config);
   }
 
@@ -81,6 +83,8 @@ class MetronomeEngine {
     _useCountdownTimer = config.useCountdownTimer;
     _countdownDurationSeconds = config.countdownDurationSeconds;
 
+    // Update markDownbeat setting
+    _markDownbeat = config.markDownbeat;
     // Recreate the countdown timer if needed
     if (_useCountdownTimer) {
       _countdownTimer?.dispose();
@@ -174,12 +178,12 @@ class MetronomeEngine {
       }
 
       // Play the appropriate sound
-      if (_currentPulse == 0) {
-        // First beat is strong
+      if (_currentPulse == 0 && _markDownbeat) {
+        // First beat is strong (only if markDownbeat is true)
         _strongBeatPlayer.stop();
         _strongBeatPlayer.resume();
       } else {
-        // Other beats are weak
+        // Other beats are weak (or all beats if markDownbeat is false)
         _weakBeatPlayer.stop();
         _weakBeatPlayer.resume();
       }

@@ -13,6 +13,7 @@ class MetronomeConfig {
   final double weakBeatVolume;
   final bool useCountdownTimer;
   final int countdownDurationSeconds;
+  final bool markDownbeat; // Add this new property
 
   MetronomeConfig({
     String? id,
@@ -23,6 +24,7 @@ class MetronomeConfig {
     this.weakBeatVolume = MetronomeVolume.weakBeatVolume,
     this.useCountdownTimer = false,
     this.countdownDurationSeconds = 300, // Default 5 minutes
+    this.markDownbeat = true, // Default value is true
   }) :
     id = id ?? const Uuid().v4(),
     cellSequence = cellSequence ?? [CellConfig(pulses: 4)];

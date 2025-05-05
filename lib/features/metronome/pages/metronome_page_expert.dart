@@ -11,14 +11,14 @@ import '../widgets/sequence_list.dart';
 import '../widgets/countdown_timer_widget.dart';
 
 // Main metronome page
-class MetronomePage extends StatefulWidget {
-  const MetronomePage({super.key});
+class MetronomePageExpert extends StatefulWidget {
+  const MetronomePageExpert({super.key});
 
   @override
-  _MetronomePageState createState() => _MetronomePageState();
+  _MetronomePageExpertState createState() => _MetronomePageExpertState();
 }
 
-class _MetronomePageState extends State<MetronomePage> {
+class _MetronomePageExpertState extends State<MetronomePageExpert> {
   // Metronome engine instance
   late final MetronomeEngine _metronome;
   List<CellConfig> _sequence = [];
