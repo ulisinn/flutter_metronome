@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'features/metronome/pages/metronome_page.dart';
+import 'package:flutter_metronome/routing/app_router.dart';
 
 void main() {
   runApp(const MetronomeApp());
@@ -11,14 +10,14 @@ class MetronomeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Custom Metronome',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         brightness: Brightness.dark,
         useMaterial3: true,
       ),
-      home: const MetronomePage(),
+      routerConfig: goRouter,
     );
   }
 }
