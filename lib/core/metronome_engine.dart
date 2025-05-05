@@ -4,8 +4,8 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 
 import '../constants/constants.dart';
-import '../models/cell_config.dart';
-import '../models/metronome_config.dart';
+import '../features/metronome/models/cell_config.dart';
+import '../features/metronome/models/metronome_config.dart';
 import 'countdown_timer.dart';
 
 class MetronomeEngine {

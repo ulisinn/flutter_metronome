@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/cell_config.dart';
-import 'beat_indicator.dart';
+import '../widgets/beat_indicator.dart';
 
 class BeatVisualizerWidget extends StatelessWidget {
   final CellConfig currentCell;

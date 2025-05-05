@@ -1,5 +1,5 @@
 // lib/models/metronome_config.dart
-import '../constants/constants.dart';
+import '../../../constants/constants.dart';
 import 'cell_config.dart';
 
 class MetronomeConfig {
