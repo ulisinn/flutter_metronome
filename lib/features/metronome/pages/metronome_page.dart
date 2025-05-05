@@ -45,7 +45,7 @@ class _MetronomePageState extends State<MetronomePage> {
     // Create a config object
     final _config = MetronomeConfig(
       initialBpm: _bpm, // Custom initial BPM
-      initialSequence: [
+      cellSequence: [
         // Custom initial sequence
         CellConfig(pulses: 4),
       ],
@@ -54,7 +54,7 @@ class _MetronomePageState extends State<MetronomePage> {
     // TODO: make config object in constructor work.
     // Initialize metronome engine with config
     // _metronome = MetronomeEngine(config: config);
-    _sequence = List.from(_config.initialSequence);
+    _sequence = List.from(_config.cellSequence);
     _metronome = MetronomeEngine(config: _config);
 
     // Set up listeners for metronome events
@@ -152,7 +152,7 @@ class _MetronomePageState extends State<MetronomePage> {
   MetronomeConfig _createCurrentConfig() {
     return MetronomeConfig(
       initialBpm: _bpm,
-      initialSequence: List.from(_sequence),
+      cellSequence: List.from(_sequence),
       // Use local sequence instead of _metronome.sequence
       useCountdownTimer: _useCountdownTimer,
       countdownDurationSeconds: _countdownDuration,

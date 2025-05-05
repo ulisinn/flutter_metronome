@@ -58,8 +58,8 @@ class MetronomeEngine {
     await _prepareAudioPlayers();
 
     // Add cells from config or default
-    if (config != null && config.initialSequence.isNotEmpty) {
-      _sequence.addAll(config.initialSequence);
+    if (config != null && config.cellSequence.isNotEmpty) {
+      _sequence.addAll(config.cellSequence);
     } else {
       // Add a default cell to start
       _sequence.add(CellConfig(pulses: 4));
@@ -97,7 +97,7 @@ class MetronomeEngine {
 
     // Update sequence
     _sequence.clear();
-    _sequence.addAll(config.initialSequence);
+    _sequence.addAll(config.cellSequence);
     _updateTotalPulses();
 
     // Reset current position

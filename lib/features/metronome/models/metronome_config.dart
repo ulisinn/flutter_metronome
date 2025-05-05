@@ -1,21 +1,29 @@
 // lib/models/metronome_config.dart
+import 'package:uuid/uuid.dart';
+
 import '../../../constants/constants.dart';
 import 'cell_config.dart';
 
 class MetronomeConfig {
+  final String id;
+  final String? title;
   final double initialBpm;
-  final List<CellConfig> initialSequence;
+  final List<CellConfig> cellSequence;
   final double strongBeatVolume;
   final double weakBeatVolume;
   final bool useCountdownTimer;
   final int countdownDurationSeconds;
 
   MetronomeConfig({
+    String? id,
+    this.title,
     this.initialBpm = 120.0,
-    List<CellConfig>? initialSequence,
+    List<CellConfig>? cellSequence,
     this.strongBeatVolume = MetronomeVolume.strongBeatVolume,
     this.weakBeatVolume = MetronomeVolume.weakBeatVolume,
     this.useCountdownTimer = false,
     this.countdownDurationSeconds = 300, // Default 5 minutes
-  }) : initialSequence = initialSequence ?? [CellConfig(pulses: 4)];
+  }) :
+    id = id ?? const Uuid().v4(),
+    cellSequence = cellSequence ?? [CellConfig(pulses: 4)];
 }
