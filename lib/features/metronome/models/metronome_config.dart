@@ -1,7 +1,7 @@
 // lib/models/metronome_config.dart
 import 'package:uuid/uuid.dart';
 
-import '../../../constants/constants.dart';
+import '../../../constants/metronome_settings.dart';
 import 'cell_config.dart';
 
 class MetronomeConfig {

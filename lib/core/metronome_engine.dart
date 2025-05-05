@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
 
-import '../constants/constants.dart';
+import '../constants/metronome_settings.dart';
 import '../features/metronome/models/cell_config.dart';
 import '../features/metronome/models/metronome_config.dart';
 import 'countdown_timer.dart';

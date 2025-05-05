@@ -1,6 +1,7 @@
 
 // Widget for BPM control
 import 'package:flutter/material.dart';
+import 'package:flutter_metronome/constants/metronome_settings.dart';
 
 class BpmControlWidget extends StatelessWidget {
   final double bpm;
@@ -18,8 +19,8 @@ class BpmControlWidget extends StatelessWidget {
           Expanded(
             child: Slider(
               value: bpm,
-              min: 40,
-              max: 240,
+              min: MetronomeMarkings.lowerBorder,
+              max: MetronomeMarkings.upperBorder,
               divisions: 200,
               label: bpm.round().toString(),
               onChanged: onChanged,
