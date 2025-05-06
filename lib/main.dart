@@ -14,7 +14,7 @@ class MetronomeApp extends StatelessWidget {
       title: 'Custom Metronome',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         useMaterial3: true,
       ),
       routerConfig: goRouter,

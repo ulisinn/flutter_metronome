@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../models/cell_config.dart';
 import '../models/metronome_config.dart';
@@ -169,7 +170,15 @@ class _MetronomePageExpertState extends State<MetronomePageExpert> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Custom Metronome'), centerTitle: true),
+      appBar: AppBar(
+        title: const Text('Metronome Expert Settings'),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          // TODO: FIX NAVIGATION
+          onPressed: () => context.go('/'),  // Navigate back to home
+        ),
+      ),
       body: Column(
         children: [
           // BPM control

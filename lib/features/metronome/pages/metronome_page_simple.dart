@@ -39,7 +39,6 @@ class _MetronomePageSimpleState extends State<MetronomePageSimple> {
       initialBpm: _bpm,
       cellSequence: [CellConfig(pulses: 4)], // Default 4/4 time signature
       markDownbeat: false, // Set to false for simple metronome
-
     );
 
     // Initialize metronome engine with config
@@ -64,7 +63,8 @@ class _MetronomePageSimpleState extends State<MetronomePageSimple> {
     // Find the closest value in the mmList
     _currentBpmIndex = value.round();
 
-    if (_currentBpmIndex >= 0 && _currentBpmIndex < MetronomeMarkings.mmList.length) {
+    if (_currentBpmIndex >= 0 &&
+        _currentBpmIndex < MetronomeMarkings.mmList.length) {
       setState(() {
         _bpm = MetronomeMarkings.mmList[_currentBpmIndex];
 
@@ -95,7 +95,15 @@ class _MetronomePageSimpleState extends State<MetronomePageSimple> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Simple Metronome'), centerTitle: true),
+      appBar: AppBar(
+        title: const Text('Metronome Simple Settings'),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          // TODO: FIX NAVIGATION
+          onPressed: () => context.go('/'), // Navigate back to home
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -158,17 +166,17 @@ class _MetronomePageSimpleState extends State<MetronomePageSimple> {
             isPlaying: _isPlaying,
             onToggle: () => _metronome.togglePlayback(),
           ),
-                  // Add spacing between the play button and the Expert Mode button
-        const SizedBox(height: 20),
+          // Add spacing between the play button and the Expert Mode button
+          const SizedBox(height: 20),
 
-        // Expert Mode button
-        ElevatedButton(
-          onPressed: () {
-            // Navigate to the expert mode page using GoRouter
-            GoRouter.of(context).goNamed(AppRoute.metronomeExpert.name);
-          },
-          child: const Text('Expert Mode'),
-        ),
+          // Expert Mode button
+          ElevatedButton(
+            onPressed: () {
+              // Navigate to the expert mode page using GoRouter
+              GoRouter.of(context).goNamed(AppRoute.metronomeExpert.name);
+            },
+            child: const Text('Expert Mode'),
+          ),
         ],
       ),
     );
