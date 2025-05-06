@@ -35,7 +35,7 @@ class _MetronomePageExpertState extends State<MetronomePageExpert> {
   int _currentPulse = -1;
 
   // Add these state variables to _MetronomePageState
-  bool _useCountdownTimer = false;
+  bool _useCountdownTimer = true;
   int _countdownDuration = 300; // Default 5 minutes
 
   @override
@@ -49,6 +49,7 @@ class _MetronomePageExpertState extends State<MetronomePageExpert> {
         // Custom initial sequence
         CellConfig(pulses: 4),
       ],
+      useCountdownTimer: _useCountdownTimer,
     );
 
     // TODO: make config object in constructor work.
