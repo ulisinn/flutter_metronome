@@ -10,6 +10,7 @@ import '../widgets/cell_selector.dart';
 import '../widgets/playback_control.dart';
 import '../widgets/sequence_list.dart';
 import '../widgets/countdown_timer_widget.dart';
+import '../widgets/save_metronome_dialog.dart';
 
 // Main metronome page
 class MetronomePageExpert extends StatefulWidget {
@@ -161,6 +162,25 @@ class _MetronomePageExpertState extends State<MetronomePageExpert> {
     );
   }
 
+  // Show save dialog method
+  void _showSaveDialog(BuildContext context) {
+    // Calculate time signature based on the first cell in the sequence
+    String timeSignature = _sequence.isNotEmpty
+        ? '${_sequence[0].pulses}/4'
+        : '4/4'; // Default to 4/4 if sequence is empty
+
+    showSaveMetronomeDialog(
+      context: context,
+      bpm: _bpm.round(),
+      timeSignature: timeSignature,
+      onSave: (title) {
+        // Now you have access to the validated title
+        // This would save the settings with the provided title
+        print('Saving expert metronome settings with title: $title');
+      },
+    );
+  }
+
   @override
   void dispose() {
     _metronome.dispose();
@@ -220,6 +240,15 @@ class _MetronomePageExpertState extends State<MetronomePageExpert> {
           PlaybackControlWidget(
             isPlaying: _isPlaying,
             onToggle: () => _metronome.togglePlayback(),
+          ),
+
+          // Add spacing between the play button and the Save button
+          const SizedBox(height: 20),
+
+          // Save button
+          ElevatedButton(
+            onPressed: () => _showSaveDialog(context),
+            child: const Text('Save Current Settings'),
           ),
         ],
       ),

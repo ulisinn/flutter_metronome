@@ -194,7 +194,7 @@ void _showSaveDialog(BuildContext context) {
           // In the build method, after the Expert Mode button (around line 179), add:
           const SizedBox(height: 20),
 
-// Save button
+          // Save button
           ElevatedButton(
             onPressed: () => _showSaveDialog(context),
             child: const Text('Save Current Settings'),
