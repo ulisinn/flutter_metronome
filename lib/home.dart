@@ -30,6 +30,11 @@ class Home extends StatelessWidget {
               onPressed: () => context.goNamed(AppRoute.metronomeExpert.name),
               child: const Text('Metronome Expert'),
             ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () => context.goNamed(AppRoute.metronomeList.name),
+              child: const Text('Metronome List'),
+            ),
           ],
         ),
       ),

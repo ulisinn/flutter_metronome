@@ -4,7 +4,7 @@ import '../features/metronome/models/cell_config.dart';
 const List<MetronomeConfig> mockMetronomeSettingsList = [
   MetronomeConfig(
     id: null,
-    title: 'Config 1',
+    title: 'Mock Config 1',
     initialBpm: 66.0,
     cellSequence: [
       CellConfig(pulses: 2, isActive: false),
@@ -18,7 +18,7 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 2',
+    title: 'Mock Config 2',
     initialBpm: 96.0,
     cellSequence: [
       CellConfig(pulses: 2, isActive: false),
@@ -33,24 +33,20 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 3',
+    title: 'Mock Config 3',
     initialBpm: 42.0,
     cellSequence: [
-      CellConfig(pulses: 3, isActive: false),
-      CellConfig(pulses: 2, isActive: false),
       CellConfig(pulses: 4, isActive: false),
-      CellConfig(pulses: 4, isActive: false),
-      CellConfig(pulses: 3, isActive: false),
     ],
     strongBeatVolume: 1.0,
     weakBeatVolume: 0.6,
-    useCountdownTimer: true,
+    useCountdownTimer: false,
     countdownDurationSeconds: 297,
     markDownbeat: false,
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 4',
+    title: 'Mock Config 4',
     initialBpm: 208.0,
     cellSequence: [
       CellConfig(pulses: 2, isActive: false),
@@ -67,9 +63,9 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 5',
+    title: 'Mock Config 5',
     initialBpm: 232.0,
-    cellSequence: [CellConfig(pulses: 2, isActive: false)],
+    cellSequence: [CellConfig(pulses: 4, isActive: false)],
     strongBeatVolume: 1.0,
     weakBeatVolume: 0.6,
     useCountdownTimer: false,
@@ -78,35 +74,31 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 6',
+    title: 'Mock Config 6',
     initialBpm: 40.0,
     cellSequence: [
-      CellConfig(pulses: 4, isActive: false),
-      CellConfig(pulses: 3, isActive: false),
-      CellConfig(pulses: 2, isActive: false),
-      CellConfig(pulses: 3, isActive: false),
       CellConfig(pulses: 4, isActive: false),
     ],
     strongBeatVolume: 1.0,
     weakBeatVolume: 0.6,
-    useCountdownTimer: true,
+    useCountdownTimer: false,
     countdownDurationSeconds: 359,
     markDownbeat: false,
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 7',
+    title: 'Mock Config 7',
     initialBpm: 60.0,
-    cellSequence: [CellConfig(pulses: 2, isActive: false)],
+    cellSequence: [CellConfig(pulses: 4, isActive: false)],
     strongBeatVolume: 1.0,
     weakBeatVolume: 0.6,
-    useCountdownTimer: true,
+    useCountdownTimer: false,
     countdownDurationSeconds: 550,
     markDownbeat: false,
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 8',
+    title: 'Mock Config 8',
     initialBpm: 104.0,
     cellSequence: [
       CellConfig(pulses: 2, isActive: false),
@@ -123,39 +115,33 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 9',
+    title: 'Mock Config 9',
     initialBpm: 144.0,
     cellSequence: [
-      CellConfig(pulses: 2, isActive: false),
-      CellConfig(pulses: 2, isActive: false),
-      CellConfig(pulses: 3, isActive: false),
+      CellConfig(pulses: 4, isActive: false),
     ],
     strongBeatVolume: 1.0,
     weakBeatVolume: 0.6,
-    useCountdownTimer: true,
+    useCountdownTimer: false,
     countdownDurationSeconds: 277,
     markDownbeat: false,
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 10',
+    title: 'Mock Config 10',
     initialBpm: 232.0,
     cellSequence: [
-      CellConfig(pulses: 2, isActive: false),
-      CellConfig(pulses: 3, isActive: false),
-      CellConfig(pulses: 2, isActive: false),
-      CellConfig(pulses: 3, isActive: false),
       CellConfig(pulses: 4, isActive: false),
     ],
     strongBeatVolume: 1.0,
     weakBeatVolume: 0.6,
-    useCountdownTimer: true,
+    useCountdownTimer: false,
     countdownDurationSeconds: 476,
     markDownbeat: false,
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 11',
+    title: 'Mock Config 11',
     initialBpm: 108.0,
     cellSequence: [CellConfig(pulses: 2, isActive: false)],
     strongBeatVolume: 1.0,
@@ -166,11 +152,10 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 12',
+    title: 'Mock Config 12',
     initialBpm: 88.0,
     cellSequence: [
-      CellConfig(pulses: 3, isActive: false),
-      CellConfig(pulses: 3, isActive: false),
+      CellConfig(pulses: 4, isActive: false),
     ],
     strongBeatVolume: 1.0,
     weakBeatVolume: 0.6,
@@ -180,7 +165,7 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 13',
+    title: 'Mock Config 13',
     initialBpm: 224.0,
     cellSequence: [
       CellConfig(pulses: 4, isActive: false),
@@ -195,18 +180,18 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 14',
+    title: 'Mock Config 14',
     initialBpm: 176.0,
-    cellSequence: [CellConfig(pulses: 2, isActive: false)],
+    cellSequence: [CellConfig(pulses: 4, isActive: false)],
     strongBeatVolume: 1.0,
     weakBeatVolume: 0.6,
-    useCountdownTimer: true,
+    useCountdownTimer: false,
     countdownDurationSeconds: 45,
     markDownbeat: false,
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 15',
+    title: 'Mock Config 15',
     initialBpm: 152.0,
     cellSequence: [
       CellConfig(pulses: 3, isActive: false),
@@ -221,7 +206,7 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 16',
+    title: 'Mock Config 16',
     initialBpm: 58.0,
     cellSequence: [
       CellConfig(pulses: 4, isActive: false),
@@ -238,7 +223,7 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 17',
+    title: 'Mock Config 17',
     initialBpm: 54.0,
     cellSequence: [
       CellConfig(pulses: 3, isActive: false),
@@ -252,7 +237,7 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 18',
+    title: 'Mock Config 18',
     initialBpm: 63.0,
     cellSequence: [
       CellConfig(pulses: 3, isActive: false),
@@ -269,7 +254,7 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 19',
+    title: 'Mock Config 19',
     initialBpm: 76.0,
     cellSequence: [
       CellConfig(pulses: 2, isActive: false),
@@ -283,7 +268,7 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 20',
+    title: 'Mock Config 20',
     initialBpm: 108.0,
     cellSequence: [CellConfig(pulses: 3, isActive: false)],
     strongBeatVolume: 1.0,
@@ -294,7 +279,7 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 21',
+    title: 'Mock Config 21',
     initialBpm: 240.0,
     cellSequence: [
       CellConfig(pulses: 4, isActive: false),
@@ -304,13 +289,13 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
     ],
     strongBeatVolume: 1.0,
     weakBeatVolume: 0.6,
-    useCountdownTimer: true,
+    useCountdownTimer: false,
     countdownDurationSeconds: 41,
     markDownbeat: false,
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 22',
+    title: 'Mock Config 22',
     initialBpm: 66.0,
     cellSequence: [
       CellConfig(pulses: 3, isActive: false),
@@ -318,13 +303,13 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
     ],
     strongBeatVolume: 1.0,
     weakBeatVolume: 0.6,
-    useCountdownTimer: true,
+    useCountdownTimer: false,
     countdownDurationSeconds: 401,
     markDownbeat: false,
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 23',
+    title: 'Mock Config 23',
     initialBpm: 100.0,
     cellSequence: [
       CellConfig(pulses: 2, isActive: false),
@@ -340,7 +325,7 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 24',
+    title: 'Mock Config 24',
     initialBpm: 50.0,
     cellSequence: [
       CellConfig(pulses: 3, isActive: false),
@@ -357,7 +342,7 @@ const List<MetronomeConfig> mockMetronomeSettingsList = [
   ),
   MetronomeConfig(
     id: null,
-    title: 'Config 25',
+    title: 'Mock Config 25',
     initialBpm: 56.0,
     cellSequence: [
       CellConfig(pulses: 3, isActive: false),
