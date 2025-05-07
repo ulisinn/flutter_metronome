@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../constants/metronome_settings.dart';
-import '../../../core/metronome_engine.dart';
-import '../../../routing/app_router.dart';
-import '../models/cell_config.dart';
-import '../models/metronome_config.dart';
+import '../../../../constants/metronome_settings.dart';
+import '../../../../core/metronome_engine.dart';
+import '../../../../routing/app_router.dart';
+import '../../models/cell_config.dart';
+import '../../models/metronome_config.dart';
 import '../widgets/beat_visualizer.dart';
 import '../widgets/playback_control.dart';
 

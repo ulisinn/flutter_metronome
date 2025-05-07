@@ -1,7 +1,8 @@
 // Widget for individual cell items in the list
 import 'package:flutter/material.dart';
 
-import '../models/cell_config.dart';
+import '../../models/cell_config.dart';
+
 
 class CellListItem extends StatelessWidget {
   final CellConfig cell;

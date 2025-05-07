@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../models/cell_config.dart';
-import '../models/metronome_config.dart';
-import '../../../core/metronome_engine.dart';
+import '../../../../core/metronome_engine.dart';
+import '../../models/cell_config.dart';
+import '../../models/metronome_config.dart';
 import '../widgets/beat_visualizer.dart';
 import '../widgets/bpm_control.dart';
 import '../widgets/cell_selector.dart';

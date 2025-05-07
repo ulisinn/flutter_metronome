@@ -1,8 +1,8 @@
 import 'package:flutter_metronome/playground.dart';
 import 'package:go_router/go_router.dart';
 
-import '../features/metronome/pages/metronome_page_expert.dart';
-import '../features/metronome/pages/metronome_page_simple.dart';
+import '../features/metronome/presentation/screens/metronome_page_expert.dart';
+import '../features/metronome/presentation/screens/metronome_page_simple.dart';
 import '../home.dart';
 import 'not_found_screen.dart';
 

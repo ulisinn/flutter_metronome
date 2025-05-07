@@ -1,7 +1,7 @@
 // Widget for displaying the sequence of cells
 import 'package:flutter/material.dart';
 
-import '../models/cell_config.dart';
+import '../../models/cell_config.dart';
 import 'cell_list_item.dart';
 
 class SequenceListWidget extends StatelessWidget {

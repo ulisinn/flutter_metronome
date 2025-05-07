@@ -2,7 +2,7 @@
 // Widget for selecting cell types
 import 'package:flutter/material.dart';
 
-import '../models/cell_config.dart';
+import '../../models/cell_config.dart';
 
 class CellSelectorWidget extends StatelessWidget {
   final List<CellConfig> availableCells;

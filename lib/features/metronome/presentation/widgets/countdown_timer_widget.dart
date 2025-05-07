@@ -1,7 +1,6 @@
 // lib/widgets/countdown_timer_widget.dart
 import 'package:flutter/material.dart';
-
-import '../../../constants/metronome_settings.dart';
+import '../../../../constants/metronome_settings.dart';
 
 class CountdownTimerWidget extends StatefulWidget {
   final bool isEnabled;

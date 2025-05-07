@@ -2,7 +2,7 @@
 // Widget for visualizing the current beat
 import 'package:flutter/material.dart';
 
-import '../models/cell_config.dart';
+import '../../models/cell_config.dart';
 import '../widgets/beat_indicator.dart';
 
 class BeatVisualizerWidget extends StatelessWidget {
