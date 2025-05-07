@@ -9,6 +9,7 @@ import '../../models/cell_config.dart';
 import '../../models/metronome_config.dart';
 import '../widgets/beat_visualizer.dart';
 import '../widgets/playback_control.dart';
+import '../widgets/save_metronome_dialog.dart';
 
 class MetronomePageSimple extends StatefulWidget {
   const MetronomePageSimple({super.key});
@@ -85,6 +86,19 @@ class _MetronomePageSimpleState extends State<MetronomePageSimple> {
       markDownbeat: false, // Set to false for simple metronome
     );
   }
+
+// Inside the _MetronomePageSimpleState class
+void _showSaveDialog(BuildContext context) {
+  showSaveMetronomeDialog(
+    context: context,
+    bpm: _bpm.round(),
+    onSave: (title) {
+      // Now you have access to the validated title
+      // This would save the settings with the provided title
+      print('Saving metronome settings with title: $title');
+    },
+  );
+}
 
   @override
   void dispose() {
@@ -176,6 +190,14 @@ class _MetronomePageSimpleState extends State<MetronomePageSimple> {
               GoRouter.of(context).goNamed(AppRoute.metronomeExpert.name);
             },
             child: const Text('Expert Mode'),
+          ),
+          // In the build method, after the Expert Mode button (around line 179), add:
+          const SizedBox(height: 20),
+
+// Save button
+          ElevatedButton(
+            onPressed: () => _showSaveDialog(context),
+            child: const Text('Save Current Settings'),
           ),
         ],
       ),
