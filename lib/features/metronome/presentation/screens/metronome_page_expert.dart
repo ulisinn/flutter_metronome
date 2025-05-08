@@ -14,7 +14,9 @@ import '../widgets/save_metronome_dialog.dart';
 
 // Main metronome page
 class MetronomePageExpert extends StatefulWidget {
-  const MetronomePageExpert({super.key});
+  final MetronomeConfig? config;
+
+  const MetronomePageExpert({super.key, this.config});
 
   @override
   _MetronomePageExpertState createState() => _MetronomePageExpertState();
@@ -44,8 +46,8 @@ class _MetronomePageExpertState extends State<MetronomePageExpert> {
   void initState() {
     super.initState();
 
-    // Create a config object
-    final _config = MetronomeConfig(
+    // Use the provided config if available, otherwise create a new one
+    final _config = widget.config ?? MetronomeConfig(
       initialBpm: _bpm, // Custom initial BPM
       cellSequence: [
         // Custom initial sequence
@@ -54,10 +56,19 @@ class _MetronomePageExpertState extends State<MetronomePageExpert> {
       useCountdownTimer: _useCountdownTimer,
     );
 
-    // TODO: make config object in constructor work.
-    // Initialize metronome engine with config
-    // _metronome = MetronomeEngine(config: config);
+    // If a config was provided, update the local state variables
+    if (widget.config != null) {
+      _bpm = widget.config!.initialBpm;
+      _useCountdownTimer = widget.config!.useCountdownTimer;
+      if (widget.config!.countdownDurationSeconds > 0) {
+        _countdownDuration = widget.config!.countdownDurationSeconds;
+      }
+    }
+
+    // Initialize sequence from config
     _sequence = List.from(_config.cellSequence);
+
+    // Initialize metronome engine with config
     _metronome = MetronomeEngine(config: _config);
 
     // Set up listeners for metronome events

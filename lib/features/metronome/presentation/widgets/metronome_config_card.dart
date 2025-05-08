@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../core/metronome_engine.dart';
+import '../../../../routing/app_router.dart';
 import '../../models/metronome_config.dart';
 
 class MetronomeConfigCard extends StatefulWidget {
@@ -76,14 +78,22 @@ class _MetronomeConfigCardState extends State<MetronomeConfigCard> {
                         label: Text('${widget.config.initialBpm.toInt()} BPM'),
                         backgroundColor: Colors.blue.shade100,
                       ),
-                      if (widget.config.markDownbeat)
-                        const Padding(
-                          padding: EdgeInsets.only(left: 8.0),
-                          child: Chip(
-                            label: Text('Downbeat'),
-                            backgroundColor: Colors.orange,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: ElevatedButton(
+                            onPressed: (){
+                              if( widget.config.markDownbeat){
+                                context.pushNamed(AppRoute.metronomeExpert.name);
+                              }else{
+                                context.pushNamed(AppRoute.metronomeSimple.name);
+                              }
+                            }, // Empty callback for now
+                            child: const Text('Edit'),
                           ),
                         ),
+                      ),
                     ],
                   ),
                 ),

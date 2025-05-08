@@ -12,7 +12,9 @@ import '../widgets/playback_control.dart';
 import '../widgets/save_metronome_dialog.dart';
 
 class MetronomePageSimple extends StatefulWidget {
-  const MetronomePageSimple({super.key});
+  final MetronomeConfig? config;
+
+  const MetronomePageSimple({super.key, this.config});
 
   @override
   _MetronomePageSimpleState createState() => _MetronomePageSimpleState();
@@ -35,12 +37,20 @@ class _MetronomePageSimpleState extends State<MetronomePageSimple> {
   void initState() {
     super.initState();
 
-    // Create a simple config object with only initialBpm
-    final _config = MetronomeConfig(
+    // Use the provided config if available, otherwise create a new one
+    final _config = widget.config ?? MetronomeConfig(
       initialBpm: _bpm,
       cellSequence: [CellConfig(pulses: 4)], // Default 4/4 time signature
       markDownbeat: false, // Set to false for simple metronome
     );
+
+    // If a config was provided, update the local BPM value
+    if (widget.config != null) {
+      _bpm = widget.config!.initialBpm;
+      _currentBpmIndex = MetronomeMarkings.mmList.indexOf(_bpm) != -1
+          ? MetronomeMarkings.mmList.indexOf(_bpm)
+          : _currentBpmIndex;
+    }
 
     // Initialize metronome engine with config
     _metronome = MetronomeEngine(config: _config);
