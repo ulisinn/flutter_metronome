@@ -85,8 +85,8 @@ as bool,
 
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(explicitToJson: true)
 class _MetronomeConfig implements MetronomeConfig {
   const _MetronomeConfig({this.id, this.title, this.initialBpm = 120.0, required final  List<CellConfig> cellSequence, this.strongBeatVolume = MetronomeVolume.strongBeatVolume, this.weakBeatVolume = MetronomeVolume.weakBeatVolume, this.useCountdownTimer = false, this.countdownDurationSeconds = 300, this.markDownbeat = true}): _cellSequence = cellSequence;
   factory _MetronomeConfig.fromJson(Map<String, dynamic> json) => _$MetronomeConfigFromJson(json);

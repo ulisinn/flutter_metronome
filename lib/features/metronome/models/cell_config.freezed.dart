@@ -78,8 +78,8 @@ as bool,
 
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(explicitToJson: true)
 class _CellConfig implements CellConfig {
   const _CellConfig({required this.pulses, this.isActive = true});
   factory _CellConfig.fromJson(Map<String, dynamic> json) => _$CellConfigFromJson(json);

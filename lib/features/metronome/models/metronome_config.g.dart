@@ -32,7 +32,7 @@ Map<String, dynamic> _$MetronomeConfigToJson(_MetronomeConfig instance) =>
       'id': instance.id,
       'title': instance.title,
       'initialBpm': instance.initialBpm,
-      'cellSequence': instance.cellSequence,
+      'cellSequence': instance.cellSequence.map((e) => e.toJson()).toList(),
       'strongBeatVolume': instance.strongBeatVolume,
       'weakBeatVolume': instance.weakBeatVolume,
       'useCountdownTimer': instance.useCountdownTimer,

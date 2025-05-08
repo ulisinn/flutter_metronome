@@ -8,11 +8,12 @@ part 'cell_config.g.dart';
 
 @freezed
 abstract class CellConfig with _$CellConfig {
+  @JsonSerializable(explicitToJson: true)
   const factory CellConfig({
     required int pulses,
     @Default(true) bool isActive,
   }) = _CellConfig;
 
-  factory CellConfig.fromJson(Map<String, Object?> json) =>
+  factory CellConfig.fromJson(Map<String, dynamic> json) =>
       _$CellConfigFromJson(json);
 }

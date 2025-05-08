@@ -12,6 +12,8 @@ part 'metronome_config.g.dart';
 
 @freezed
 abstract class MetronomeConfig with _$MetronomeConfig {
+
+  @JsonSerializable(explicitToJson: true)
   const factory MetronomeConfig({
     String? id,
     String? title,
@@ -24,7 +26,7 @@ abstract class MetronomeConfig with _$MetronomeConfig {
     @Default(true) bool markDownbeat,
   }) = _MetronomeConfig;
 
-  factory MetronomeConfig.fromJson(Map<String, Object?> json) =>
+  factory MetronomeConfig.fromJson(Map<String, dynamic> json) =>
       _$MetronomeConfigFromJson(json);
 
   // Custom constructor to match the original MetronomeConfig behavior
