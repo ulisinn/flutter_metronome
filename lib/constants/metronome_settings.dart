@@ -3,14 +3,15 @@ class MetronomeVolume {
   static const double weakBeatVolume = 0.6;
 }
 
-class MetronomeDuration{
+class MetronomeDuration {
   static const double min = 30.0;
   static const double max = 600.0;
 }
 
 class MetronomeMarkings {
   static double lowerBorder = MetronomeMarkings.mmList[0];
-  static double upperBorder = MetronomeMarkings.mmList[MetronomeMarkings.mmList.length - 1];
+  static double upperBorder =
+      MetronomeMarkings.mmList[MetronomeMarkings.mmList.length - 1];
   static const mmList = <double>[
     40,
     42,
@@ -58,7 +59,7 @@ class MetronomeMarkings {
   ];
 
   static String tempoName(int tempo) {
-    String? tempoName;
+    String? tempoName = '';
     if (tempo < 40) {
       tempoName = 'Grave';
     } else if (tempo < 50) {
@@ -85,7 +86,6 @@ class MetronomeMarkings {
       tempoName = 'Prestissimo';
     }
 
-    return tempoName ?? 'Moderato';
+    return tempoName.isEmpty ? 'Moderato' : tempoName;
   }
-
 }

@@ -50,7 +50,10 @@ void main() {
       expect(config.strongBeatVolume, equals(tStrongBeatVolume));
       expect(config.weakBeatVolume, equals(tWeakBeatVolume));
       expect(config.useCountdownTimer, equals(tUseCountdownTimer));
-      expect(config.countdownDurationSeconds, equals(tCountdownDurationSeconds));
+      expect(
+        config.countdownDurationSeconds,
+        equals(tCountdownDurationSeconds),
+      );
       expect(config.markDownbeat, equals(tMarkDownbeat));
     });
 
