@@ -19,7 +19,10 @@ void main() {
     String title = 'Config ${index + 1}';
 
     // Generate random BPM from the tempo list
-    double bpm = MetronomeMarkings.mmList[random.nextInt(MetronomeMarkings.mmList.length)];
+    double bpm =
+        MetronomeMarkings.mmList[random.nextInt(
+          MetronomeMarkings.mmList.length,
+        )];
 
     // Generate random cell sequence with 1-5 cells
     int cellCount = random.nextInt(5) + 1;
@@ -40,6 +43,7 @@ void main() {
     int countdownDuration = random.nextInt(571) + 30; // 30 to 600
 
     return MetronomeConfig(
+      id: Uuid().v4(),
       title: title,
       initialBpm: bpm,
       cellSequence: cells,
@@ -51,7 +55,7 @@ void main() {
 
   print(metronomeConfigs);
   // Print the list of MetronomeConfig objects
-/*  for (int i = 0; i < metronomeConfigs.length; i++) {
+  /*  for (int i = 0; i < metronomeConfigs.length; i++) {
     print('Metronome Config #${i + 1}:');
     print(metronomeConfigs[i]);
     print('-----------------------------------');
